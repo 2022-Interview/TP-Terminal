@@ -1,10 +1,28 @@
 declare namespace TpTerminal {
   /**
+   * 输出状态
+   */
+  type OutputStatusType = "info" | "success" | "warning" | "error";
+
+  interface TextOutputType extends OutputType {}
+
+  /**
    * 输入的命令类型
    */
   interface CommandInputType {
     text: string;
     placeholder: string;
+  }
+
+  /**
+   * 输出类型
+   */
+  interface OutputType {
+    type: "command" | "text" | "component";
+    text?: string;
+    resultList?: OutputType[];
+    component?: any;
+    collapsible?: boolean;
   }
 
   /**
@@ -16,9 +34,12 @@ declare namespace TpTerminal {
     resultList: OutputType[];
   }
 
-  interface OutputType {
-    type: "command" | "text" | "component";
-    text: string;
-    resultList: OutputType[];
+  /**
+   * 终端类型，定义一组访问及操作终端的方法
+   */
+  interface TerminalType {
+    // 写命令文本结果
+    writeTextResult: (text: string, status?: OutputStatusType) => void;
+    setTerminalCollapsible: (collapsible: boolean) => void;
   }
 }

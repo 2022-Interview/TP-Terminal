@@ -1,0 +1,66 @@
+.tp-terminal-wrapper {
+  background: black;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  .tp-terminal {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    overflow: scroll;
+    height: 100%;
+    box-sizing: border-box;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    :deep(.ant-collapse > .ant-collapse-item > .ant-collapse-header) {
+      color: white;
+      padding: 0 0 12px;
+    }
+    // 折叠框内容
+    :deep(.ant-collapse-content) {
+      color: #fff;
+      font-size: 16px;
+    }
+    :deep(.ant-collapse-borderless > .ant-collapse-item) {
+      border: none;
+    }
+  }
+
+  .terminal-row {
+    color: #fff;
+
+    span {
+      font-size: 16px;
+      font-weight: bolder;
+      font-family: courier-new, courier, monospace;
+    }
+
+    .command-input {
+      caret-color: white;
+
+      :deep(input) {
+        color: white !important;
+        font-size: 16px;
+        padding: 0 10px;
+      }
+      :deep(.ant-input-group-addon) {
+        border: none;
+        padding: 0;
+      }
+    }
+
+    .command-input-prompt {
+      color: white;
+      background: transparent;
+      user-select: none;
+    }
+  }
+
+  .tip {
+    color: rgba(255, 255, 255, 0.4);
+  }
+}
