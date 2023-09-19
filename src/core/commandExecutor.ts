@@ -1,6 +1,7 @@
+import getopts from "getopts";
 import { commandMap } from "./commandRegister";
 import TerminalType = TpTerminal.TerminalType;
-import { CommandType } from "./command";
+import { CommandOptionType, CommandType } from "./command";
 
 /**
  * 匹配命令并执行
@@ -17,10 +18,15 @@ export const doCommandExecute = (
   text = text.trim();
   if (!text) return;
   const command: CommandType = getCommmand(text, parentCommand);
-  if (command.collapsible) {
-    terminal.setTerminalCollapsible(true);
+
+  if (!command) {
+    terminal.writeTextErrorResult("找不到命令");
+    return;
   }
-  command.action(null, terminal);
+  // 解析参数（需传递不同的解析规则）
+  const options = getParse(text, command.options);
+
+  doAction(command, options, terminal);
 };
 
 /**
@@ -37,10 +43,45 @@ const getCommmand = (
 
   let commands = commandMap;
 
-  if (parentCommand) {
+  if (parentCommand && parentCommand.subCommands) {
     commands = parentCommand.subCommands;
   }
 
   const command = commands[func];
   return command;
+};
+
+/**
+ * 获取参数
+ * @param text
+ * @param commandOptions
+ * @returns
+ */
+const getParse = (
+  text: string,
+  commandOptions: CommandOptionType[]
+): getopts.ParsedOptions => {
+  // 过滤关键字（即命令）
+  const args: string[] = text.split(" ").slice(1);
+
+  // 转换
+  const options: getopts.Options = {
+    alias: {},
+    default: {},
+    string: [],
+    boolean: []
+  };
+  const parsedOptions = getopts(args, options);
+  return parsedOptions;
+};
+
+const doAction = (
+  command: CommandType,
+  parsedOptions: CommandOptionType,
+  terminal: TerminalType
+) => {
+  if (command.collapsible) {
+    terminal.setTerminalCollapsible(true);
+  }
+  command.action(parsedOptions, terminal);
 };

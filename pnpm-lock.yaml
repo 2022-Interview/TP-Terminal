@@ -14,6 +14,7 @@ specifiers:
   eslint-plugin-node: ^11.1.0
   eslint-plugin-prettier: ^5.0.0
   eslint-plugin-vue: ^9.17.0
+  getopts: ^2.3.0
   pinia: ^2.1.6
   pinia-plugin-persistedstate: ^3.2.0
   prettier: ^3.0.3
@@ -29,6 +30,7 @@ dependencies:
   '@types/node': 20.6.1
   ant-design-vue: 4.0.3_vue@3.3.4
   dayjs: 1.11.9
+  getopts: 2.3.0
   pinia: 2.1.6_typescript@5.2.2+vue@3.3.4
   pinia-plugin-persistedstate: 3.2.0_pinia@2.1.6
   vue: 3.3.4
@@ -1665,6 +1667,10 @@ packages:
       call-bind: 1.0.2
       get-intrinsic: 1.2.1
     dev: true
+
+  /getopts/2.3.0:
+    resolution: {integrity: sha512-5eDf9fuSXwxBL6q5HX+dhDj+dslFGWzU5thZ9kNKUkcPtaPdatmUFKwHFrLb/uf/WpA4BHET+AX3Scl56cAjpA==}
+    dev: false
 
   /glob-parent/5.1.2:
     resolution: {integrity: sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==}

@@ -6,7 +6,6 @@
         :bordered="false"
         expand-icon-position="end"
       >
-        <span style="color: aliceblue">{{ outputList }}</span>
         <!-- 折叠 -->
         <template v-for="(output, index) in outputList" :key="index">
           <a-collapse-panel
@@ -40,7 +39,11 @@
             </template>
 
             <!-- 纯打印文字：例如欢迎语 -->
-            <template></template>
+            <template v-else>
+              <div class="terminal-row">
+                <content-output :output="output" />
+              </div>
+            </template>
           </template>
         </template>
       </a-collapse>
@@ -73,6 +76,9 @@ import CommandOutputType = TpTerminal.CommandOutputType;
 import OutputType = TpTerminal.OutputType;
 import TerminalType = TpTerminal.TerminalType;
 import OutputStatusType = TpTerminal.OutputStatusType;
+import TextOutputType = TpTerminal.TextOutputType;
+
+import { useTerminalConfigStore } from "@/core/commands/terminal/config/terminalConfigStore";
 interface TpTerminalProps {
   height?: string;
   background?: string;
@@ -82,8 +88,6 @@ const props = withDefaults(defineProps<TpTerminalProps>(), {
   height: "100%",
   background: "https://img.btstu.cn/api/images/5de7786cc7586.jpg"
 });
-
-onMounted(() => {});
 
 /**
  * 终端样式
@@ -110,6 +114,9 @@ const inputCommand = ref<CommandInputType>({ ...initCommand });
 // 命令列表
 const outputList = ref<OutputType[]>([]);
 
+// 引入终端配置状态
+const configStore = useTerminalConfigStore();
+
 // 全局记录当前命令，便于上下切换命令
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 let currentNewCommand: CommandOutputType;
@@ -124,6 +131,7 @@ const doSubmitCommand = async () => {
     resultList: []
   };
 
+  // todo 利用对象的内存特性，实现修改内部变量
   currentNewCommand = newCommand;
 
   // 添加输出命令数组
@@ -154,11 +162,51 @@ const writeTextResult = (text: string, status?: OutputStatusType) => {
 const setTerminalCollapsible = (collapsible: boolean) => {
   currentNewCommand.collapsible = collapsible;
 };
-
+/**
+ * 错误文本提示
+ * @param text 提示信息
+ */
+const writeTextErrorResult = (text: string) => {
+  writeTextResult(text, "error");
+};
+const writeTextOutput = (text: string, status?: OutputStatusType) => {
+  const newOutput: TextOutputType = {
+    text,
+    type: "text",
+    status
+  };
+  outputList.value.push(newOutput);
+};
 /**
  * 操作终端的接口对象
  */
-const terminal: TerminalType = { writeTextResult, setTerminalCollapsible };
+const terminal: TerminalType = {
+  writeTextResult,
+  setTerminalCollapsible,
+  writeTextErrorResult,
+  writeTextOutput
+};
+
+onMounted(() => {
+  const { welcomeTexts } = configStore;
+  console.log(welcomeTexts.length);
+
+  if (welcomeTexts?.length > 0) {
+    welcomeTexts.forEach((item) => {
+      terminal.writeTextOutput(item);
+    });
+  } else {
+    terminal.writeTextOutput(
+      `Welcome to TP-Terminal, coolest browser index for geeks!` +
+        `<a href="//github.com/2022-Interview/TP-Terminal" target='_blank'> GitHub Open Source</a>`
+    );
+    terminal.writeTextOutput(
+      `Author <a href="" target="_blank">TP-Soleil</a>` +
+        `: please input 'help' to enjoy`
+    );
+    terminal.writeTextOutput("<br/>");
+  }
+});
 
 defineExpose({
   terminal

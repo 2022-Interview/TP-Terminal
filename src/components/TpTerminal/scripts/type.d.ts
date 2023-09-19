@@ -4,7 +4,14 @@ declare namespace TpTerminal {
    */
   type OutputStatusType = "info" | "success" | "warning" | "error";
 
-  interface TextOutputType extends OutputType {}
+  /**
+   * 文本类型输出
+   */
+
+  interface TextOutputType extends OutputType {
+    type: "text";
+    text: string;
+  }
 
   /**
    * 输入的命令类型
@@ -23,6 +30,8 @@ declare namespace TpTerminal {
     resultList?: OutputType[];
     component?: any;
     collapsible?: boolean;
+    status?: string;
+    props?: any;
   }
 
   /**
@@ -41,5 +50,7 @@ declare namespace TpTerminal {
     // 写命令文本结果
     writeTextResult: (text: string, status?: OutputStatusType) => void;
     setTerminalCollapsible: (collapsible: boolean) => void;
+    writeTextErrorResult: (text: string) => void;
+    writeTextOutput: (text: string, status?: OutputStatusType) => void;
   }
 }
