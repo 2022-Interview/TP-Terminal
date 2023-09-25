@@ -7,7 +7,12 @@ export interface CommandType {
   options: CommandOptionType[]; // 选项配置 -w -t
   params: CommandParamsType[]; // 参数配置 传递的内容
   // 命令执行函数
-  action: (options: any, terminal: TerminalType) => void;
+  action: (
+    options: any,
+    terminal: TerminalType,
+    parentCommand?: CommandType
+  ) => void;
+  desc?: string;
   // 是否输出折叠
   collapsible?: boolean; // 是否折叠
   alias?: string[]; // 功能别名，即 简写
@@ -29,6 +34,6 @@ export interface CommandOptionType {
 export interface CommandParamsType {
   key: string; // 参数名
   desc: string; // 描述
-  required: boolean; // 是否必填
-  efaultValue?: string | boolean; // 默认值
+  required?: boolean; // 是否必填
+  defaultValue?: string | boolean; // 默认值
 }

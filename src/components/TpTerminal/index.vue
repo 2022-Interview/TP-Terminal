@@ -64,13 +64,13 @@
       </div>
 
       <!-- 输入提示 -->
-      <div class="terminal-row tip">hint：请输入 user</div>
+      <div v-if="hint" class="terminal-row tip">hint：{{ hint }}</div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts" name="TpTerminal">
-import { computed, ref, onMounted } from "vue";
+import { computed, ref, onMounted, watchEffect } from "vue";
 import CommandInputType = TpTerminal.CommandInputType;
 import CommandOutputType = TpTerminal.CommandOutputType;
 import OutputType = TpTerminal.OutputType;
@@ -79,6 +79,7 @@ import OutputStatusType = TpTerminal.OutputStatusType;
 import TextOutputType = TpTerminal.TextOutputType;
 
 import { useTerminalConfigStore } from "@/core/commands/terminal/config/terminalConfigStore";
+import useHint from "./scripts/hint";
 interface TpTerminalProps {
   height?: string;
   background?: string;
@@ -121,6 +122,8 @@ const configStore = useTerminalConfigStore();
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 let currentNewCommand: CommandOutputType;
 
+const { hint, debounceSetHint } = useHint();
+
 // 提交命令（回车）
 const doSubmitCommand = async () => {
   const inputText: string = inputCommand.value.text;
@@ -143,6 +146,11 @@ const doSubmitCommand = async () => {
   // 重置输入框  todo: 为什么需要解构才能正常重置？
   inputCommand.value = { ...initCommand };
 };
+
+//
+watchEffect(() => {
+  debounceSetHint(inputCommand.value.text);
+});
 
 /**
  * 写入文本结果
@@ -177,6 +185,10 @@ const writeTextOutput = (text: string, status?: OutputStatusType) => {
   };
   outputList.value.push(newOutput);
 };
+
+const writeResult = (output: OutputType) => {
+  currentNewCommand.resultList.push(output);
+};
 /**
  * 操作终端的接口对象
  */
@@ -184,7 +196,8 @@ const terminal: TerminalType = {
   writeTextResult,
   setTerminalCollapsible,
   writeTextErrorResult,
-  writeTextOutput
+  writeTextOutput,
+  writeResult
 };
 
 onMounted(() => {

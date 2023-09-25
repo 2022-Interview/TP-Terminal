@@ -1,7 +1,14 @@
 import { CommandType } from "./command";
 import { dateCommand } from "./commands/dateCommand";
 import { welcomeCommand } from "./commands/terminal/config/welcomeCommand";
-const commandList: CommandType[] = [welcomeCommand, dateCommand];
+import { baiduCommand } from "./commands/search/baiduCommand";
+import { helpCommand } from "./commands/terminal/help/helpCommand";
+const commandList: CommandType[] = [
+  welcomeCommand,
+  dateCommand,
+  baiduCommand,
+  helpCommand
+];
 
 /**
  * 命令字典

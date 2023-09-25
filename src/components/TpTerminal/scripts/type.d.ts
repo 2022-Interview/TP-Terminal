@@ -44,6 +44,15 @@ declare namespace TpTerminal {
   }
 
   /**
+   * 输出的组件类型
+   */
+  interface ComponentOutputType extends OutputType {
+    type: "component";
+    component: any;
+    props?: any;
+  }
+
+  /**
    * 终端类型，定义一组访问及操作终端的方法
    */
   interface TerminalType {
@@ -52,5 +61,6 @@ declare namespace TpTerminal {
     setTerminalCollapsible: (collapsible: boolean) => void;
     writeTextErrorResult: (text: string) => void;
     writeTextOutput: (text: string, status?: OutputStatusType) => void;
+    writeResult: (output: OutputType) => void;
   }
 }
