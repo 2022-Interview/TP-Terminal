@@ -3,8 +3,8 @@
  */
 const routes = [
   {
-    path: "/user/info",
-    handler: require("./controller/userController").userInfoApi
+    path: "/user/register",
+    handler: require("./controller/userController").userRegisterApi
   }
 ];
 
