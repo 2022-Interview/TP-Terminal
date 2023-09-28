@@ -11,7 +11,7 @@ import { helpCommand } from "./commands/terminal/help/helpCommand";
  * @param parentCommand  父命令
  */
 
-export const doCommandExecute = (
+export const doCommandExecute = async (
   text: string,
   terminal: TerminalType,
   parentCommand?: CommandType
@@ -27,7 +27,21 @@ export const doCommandExecute = (
   // 解析参数（需传递不同的解析规则）
   const options = getParse(text, command.options);
 
-  doAction(command, options, terminal, parentCommand);
+  const { _ } = options;
+
+  // 有子命令，执行
+  if (
+    _.length > 0 &&
+    command.subCommands &&
+    Object.keys(command.subCommands).length > 0
+  ) {
+    // 把子命令当做新命令解析，user login xxx => login xxx
+    const subText = text.substring(text.indexOf(" ") + 1);
+    await doCommandExecute(subText, terminal, command);
+    return;
+  }
+
+  await doAction(command, options, terminal, parentCommand);
 };
 
 /**
@@ -86,8 +100,6 @@ const getParse = (
       options.default[key] = defaultValue;
     }
   });
-  console.log(args);
-  console.log(options);
   /** 实现 参数缩写
    * https://www.npmjs.com/package/getopts
    * args： ["你好", "-p"]
@@ -106,7 +118,7 @@ const getParse = (
   return parsedOptions;
 };
 
-const doAction = (
+const doAction = async (
   command: CommandType,
   options: ParsedOptions,
   terminal: TerminalType,
@@ -123,5 +135,5 @@ const doAction = (
     helpCommand.action(newOptions, terminal, parentCommand);
   }
 
-  command.action(options, terminal);
+  await command.action(options, terminal);
 };

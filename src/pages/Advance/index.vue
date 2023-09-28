@@ -8,12 +8,12 @@ import { ref } from "vue";
 
 const terminalRef = ref();
 
-const onSubmitCommand = (inputText: string) => {
+const onSubmitCommand = async (inputText: string) => {
   if (!inputText) return;
 
   const terminal = terminalRef.value.terminal;
   // 命令解析
-  doCommandExecute(inputText, terminal);
+  await doCommandExecute(inputText, terminal);
 };
 </script>
 

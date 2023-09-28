@@ -5,7 +5,7 @@ export interface CommandType {
   func: string; // 命令英文 key(必须唯一)
   name: string; // 命令名称
   options: CommandOptionType[]; // 选项配置 -w -t
-  params: CommandParamsType[]; // 参数配置 传递的内容
+  params?: CommandParamsType[]; // 参数配置 传递的内容
   // 命令执行函数
   action: (
     options: any,
@@ -27,7 +27,7 @@ export interface CommandOptionType {
   alias?: string[]; // 命令简写，比如 -w
   desc?: string; // 描述
   type: "string" | "boolean";
-  defaultValue: string | boolean; // 默认值，标识作用
+  defaultValue?: string | boolean; // 默认值，标识作用
   required?: boolean; // 是否必填
 }
 

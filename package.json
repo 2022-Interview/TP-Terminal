@@ -12,6 +12,7 @@
   "dependencies": {
     "@types/node": "^20.6.1",
     "ant-design-vue": "^4.0.3",
+    "axios": "^1.5.1",
     "dayjs": "^1.11.9",
     "getopts": "^2.3.0",
     "lodash": "^4.17.21",

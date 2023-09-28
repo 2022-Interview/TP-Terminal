@@ -140,7 +140,11 @@ const doSubmitCommand = async () => {
   // 添加输出命令数组
   await props.onSubmitCommand?.(inputText);
 
+  // setTimeout(() => {
   outputList.value.push(newCommand);
+  // }, 500);
+  console.log(outputList.value);
+
   // 默认展开
   activeKeys.value.push(outputList.value.length - 1);
   // 重置输入框  todo: 为什么需要解构才能正常重置？
@@ -177,12 +181,18 @@ const setTerminalCollapsible = (collapsible: boolean) => {
 const writeTextErrorResult = (text: string) => {
   writeTextResult(text, "error");
 };
+
+const writeTextSuccessResult = (text: string) => {
+  writeTextResult(text, "success");
+};
+
 const writeTextOutput = (text: string, status?: OutputStatusType) => {
   const newOutput: TextOutputType = {
     text,
     type: "text",
     status
   };
+
   outputList.value.push(newOutput);
 };
 
@@ -196,6 +206,7 @@ const terminal: TerminalType = {
   writeTextResult,
   setTerminalCollapsible,
   writeTextErrorResult,
+  writeTextSuccessResult,
   writeTextOutput,
   writeResult
 };

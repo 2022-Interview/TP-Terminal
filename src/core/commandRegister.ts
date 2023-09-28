@@ -3,11 +3,13 @@ import { dateCommand } from "./commands/dateCommand";
 import { welcomeCommand } from "./commands/terminal/config/welcomeCommand";
 import { baiduCommand } from "./commands/search/baiduCommand";
 import { helpCommand } from "./commands/terminal/help/helpCommand";
+import userCommands from "./commands/user/userCommands";
 const commandList: CommandType[] = [
   welcomeCommand,
   dateCommand,
   baiduCommand,
-  helpCommand
+  helpCommand,
+  ...userCommands
 ];
 
 /**

@@ -60,6 +60,7 @@ declare namespace TpTerminal {
     writeTextResult: (text: string, status?: OutputStatusType) => void;
     setTerminalCollapsible: (collapsible: boolean) => void;
     writeTextErrorResult: (text: string) => void;
+    writeTextSuccessResult: (text: string) => void;
     writeTextOutput: (text: string, status?: OutputStatusType) => void;
     writeResult: (output: OutputType) => void;
   }
