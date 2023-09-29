@@ -17,6 +17,10 @@ const routes = [
   {
     path: "/user/info",
     handler: require("./controller/userController").userInfoApi
+  },
+  {
+    path: "/fanyi/translate",
+    handler: require("./controller/fanyiController").translateApi
   }
 ];
 

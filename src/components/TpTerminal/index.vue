@@ -50,6 +50,7 @@
 
       <div class="terminal-row">
         <a-input
+          ref="commandInputRef"
           v-model:value="inputCommand.text"
           class="command-input"
           :bordered="false"
@@ -80,6 +81,9 @@ import TextOutputType = TpTerminal.TextOutputType;
 
 import { useTerminalConfigStore } from "@/core/commands/terminal/config/terminalConfigStore";
 import useHint from "./scripts/hint";
+import useHistory from "./scripts/history";
+import { registerShortcuts } from "./scripts/shortcuts";
+
 interface TpTerminalProps {
   height?: string;
   background?: string;
@@ -112,8 +116,11 @@ const initCommand: CommandInputType = {
 const activeKeys = ref<number[]>([0]);
 // 输入命令
 const inputCommand = ref<CommandInputType>({ ...initCommand });
-// 命令列表
+// 输出命令列表
 const outputList = ref<OutputType[]>([]);
+// 命令列表 用于命令操作，例如，上下切换命令
+const commandList = ref<CommandOutputType[]>([]);
+const commandInputRef = ref();
 
 // 引入终端配置状态
 const configStore = useTerminalConfigStore();
@@ -123,6 +130,11 @@ const configStore = useTerminalConfigStore();
 let currentNewCommand: CommandOutputType;
 
 const { hint, debounceSetHint } = useHint();
+
+const { showPrevCommand, showNextCommand, commandHistoryPos } = useHistory(
+  commandList.value,
+  inputCommand
+);
 
 // 提交命令（回车）
 const doSubmitCommand = async () => {
@@ -139,10 +151,13 @@ const doSubmitCommand = async () => {
 
   // 添加输出命令数组
   await props.onSubmitCommand?.(inputText);
-
-  // setTimeout(() => {
   outputList.value.push(newCommand);
-  // }, 500);
+
+  // 不为空字符串才是有效命令
+  if (inputText) {
+    commandList.value.push(newCommand);
+    commandHistoryPos.value = commandList.value.length;
+  }
   console.log(outputList.value);
 
   // 默认展开
@@ -199,6 +214,10 @@ const writeTextOutput = (text: string, status?: OutputStatusType) => {
 const writeResult = (output: OutputType) => {
   currentNewCommand.resultList.push(output);
 };
+
+const focusInput = () => {
+  commandInputRef.value.focus();
+};
 /**
  * 操作终端的接口对象
  */
@@ -208,13 +227,15 @@ const terminal: TerminalType = {
   writeTextErrorResult,
   writeTextSuccessResult,
   writeTextOutput,
-  writeResult
+  writeResult,
+  focusInput,
+  showPrevCommand,
+  showNextCommand
 };
 
 onMounted(() => {
+  registerShortcuts(terminal);
   const { welcomeTexts } = configStore;
-  console.log(welcomeTexts.length);
-
   if (welcomeTexts?.length > 0) {
     welcomeTexts.forEach((item) => {
       terminal.writeTextOutput(item);

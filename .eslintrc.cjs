@@ -60,6 +60,8 @@ module.exports = {
     "vue/attribute-hyphenation": "off" // 对模板中的自定义组件强制执行属性命名样式
   },
   globals: {
-    TpTerminal: "readonly"
+    TpTerminal: "readonly", // 命名空间
+    User: "readonly", // 命名空间
+    date: "readonly"
   }
 };

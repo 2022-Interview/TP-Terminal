@@ -1,5 +1,8 @@
 import { CommandType } from "@/core/command";
+import { useUserStore } from "./userStore";
+import { USER_INFO } from "./userConstant";
 import registerCommand from "./subCommands/registerCommand";
+import loginCommand from "./subCommands/loginCommand";
 
 const userCommands: CommandType = {
   func: "user",
@@ -13,9 +16,18 @@ const userCommands: CommandType = {
     }
   ],
   options: [],
-  subCommands: { register: registerCommand },
+  subCommands: { register: registerCommand, login: loginCommand },
   action(options, terminal) {
-    terminal.writeTextSuccessResult("当前用户");
+    const { userInfo } = useUserStore();
+    if (userInfo && userInfo.username !== USER_INFO.username) {
+      let text = `当前用户：${userInfo.username}`;
+      if (userInfo.email) {
+        text += ` ${userInfo.email}`;
+      }
+      terminal.writeTextResult(text);
+    } else {
+      terminal.writeTextErrorResult("未登录，请使用命令 user login 进行登录");
+    }
   }
 };
 export default [userCommands];

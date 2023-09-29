@@ -4,12 +4,14 @@ import { welcomeCommand } from "./commands/terminal/config/welcomeCommand";
 import { baiduCommand } from "./commands/search/baiduCommand";
 import { helpCommand } from "./commands/terminal/help/helpCommand";
 import userCommands from "./commands/user/userCommands";
+import fanyiCommand from "./commands/fanyi/fanYiCommand";
 const commandList: CommandType[] = [
   welcomeCommand,
   dateCommand,
   baiduCommand,
   helpCommand,
-  ...userCommands
+  ...userCommands,
+  fanyiCommand
 ];
 
 /**

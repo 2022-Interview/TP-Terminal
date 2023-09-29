@@ -2,7 +2,7 @@
  * 默认配置
  */
 const config = {
-  redis: {
+  redisConfig: {
     host: "localhost",
     port: "6379",
     password: "123456",

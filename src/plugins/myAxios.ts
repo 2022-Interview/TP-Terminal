@@ -4,7 +4,7 @@ import axios from "axios";
 const myAxios = axios.create({
   baseURL:
     process.env.NODE_ENV === "production"
-      ? "https://yuindex-server-974538-1256524210.ap-shanghai.run.tcloudbase.com/api"
+      ? "http://43.136.123.111:7354/api"
       : "http://localhost:7354/api"
 });
 

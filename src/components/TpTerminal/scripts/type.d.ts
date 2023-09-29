@@ -63,5 +63,8 @@ declare namespace TpTerminal {
     writeTextSuccessResult: (text: string) => void;
     writeTextOutput: (text: string, status?: OutputStatusType) => void;
     writeResult: (output: OutputType) => void;
+    focusInput: () => void;
+    showPrevCommand: () => void;
+    showNextCommand: () => void;
   }
 }
