@@ -9,6 +9,10 @@ const useHistory = (
 ) => {
   const commandHistoryPos = ref(commandList.length);
 
+  const listCommandHistory = () => {
+    return commandList;
+  };
+
   const showPrevCommand = () => {
     if (commandHistoryPos.value >= 1) {
       commandHistoryPos.value--;
@@ -20,13 +24,16 @@ const useHistory = (
     if (commandHistoryPos.value < commandList.length - 1) {
       commandHistoryPos.value++;
       inputCommand.value.text = commandList[commandHistoryPos.value].text;
+    } else {
+      inputCommand.value.text = "";
     }
   };
 
   return {
     showPrevCommand,
     showNextCommand,
-    commandHistoryPos
+    commandHistoryPos,
+    listCommandHistory
   };
 };
 export default useHistory;

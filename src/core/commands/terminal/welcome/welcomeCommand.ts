@@ -1,5 +1,5 @@
 import { CommandType } from "@/core/command";
-import { useTerminalConfigStore } from "./terminalConfigStore";
+import { useTerminalConfigStore } from "./store/terminalConfigStore";
 
 export const welcomeCommand: CommandType = {
   func: "welcome",

@@ -1,5 +1,9 @@
 <template>
-  <div class="tp-terminal-wrapper" :style="wrapperStyle">
+  <div
+    class="tp-terminal-wrapper"
+    :style="wrapperStyle"
+    @click="handleClickWrapper"
+  >
     <div class="tp-terminal">
       <a-collapse
         v-model:activeKey="activeKeys"
@@ -57,9 +61,10 @@
           :placeholder="inputCommand.placeholder"
           @press-enter="doSubmitCommand"
           onfocus
+          autofocus
         >
           <template #addonBefore>
-            <span class="command-input-prompt">[local]$</span>
+            <span class="command-input-prompt">🎊[local]$</span>
           </template>
         </a-input>
       </div>
@@ -79,7 +84,7 @@ import TerminalType = TpTerminal.TerminalType;
 import OutputStatusType = TpTerminal.OutputStatusType;
 import TextOutputType = TpTerminal.TextOutputType;
 
-import { useTerminalConfigStore } from "@/core/commands/terminal/config/terminalConfigStore";
+import { useTerminalConfigStore } from "@/core/commands/terminal/welcome/store/terminalConfigStore";
 import useHint from "./scripts/hint";
 import useHistory from "./scripts/history";
 import { registerShortcuts } from "./scripts/shortcuts";
@@ -131,10 +136,12 @@ let currentNewCommand: CommandOutputType;
 
 const { hint, debounceSetHint } = useHint();
 
-const { showPrevCommand, showNextCommand, commandHistoryPos } = useHistory(
-  commandList.value,
-  inputCommand
-);
+const {
+  showPrevCommand,
+  showNextCommand,
+  commandHistoryPos,
+  listCommandHistory
+} = useHistory(commandList.value, inputCommand);
 
 // 提交命令（回车）
 const doSubmitCommand = async () => {
@@ -218,6 +225,25 @@ const writeResult = (output: OutputType) => {
 const focusInput = () => {
   commandInputRef.value.focus();
 };
+
+/**
+ * 当点击空白聚焦输入框
+ */
+function handleClickWrapper(event: Event): void {
+  if (event.target.className === "tp-terminal") {
+    focusInput();
+  }
+}
+
+/**
+ * 清空所有输出
+ */
+const clear = () => {
+  outputList.value = outputList.value.filter((item) => {
+    return item.type !== "command";
+  });
+};
+
 /**
  * 操作终端的接口对象
  */
@@ -229,8 +255,11 @@ const terminal: TerminalType = {
   writeTextOutput,
   writeResult,
   focusInput,
+
   showPrevCommand,
-  showNextCommand
+  showNextCommand,
+  listCommandHistory,
+  clear
 };
 
 onMounted(() => {
@@ -249,7 +278,6 @@ onMounted(() => {
       `Author <a href="" target="_blank">TP-Soleil</a>` +
         `: please input 'help' to enjoy`
     );
-    terminal.writeTextOutput("<br/>");
   }
 });
 

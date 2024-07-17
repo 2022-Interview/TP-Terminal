@@ -56,6 +56,7 @@ declare namespace TpTerminal {
    * 终端类型，定义一组访问及操作终端的方法
    */
   interface TerminalType {
+    clear: () => void;
     // 写命令文本结果
     writeTextResult: (text: string, status?: OutputStatusType) => void;
     setTerminalCollapsible: (collapsible: boolean) => void;
@@ -64,7 +65,9 @@ declare namespace TpTerminal {
     writeTextOutput: (text: string, status?: OutputStatusType) => void;
     writeResult: (output: OutputType) => void;
     focusInput: () => void;
+
     showPrevCommand: () => void;
     showNextCommand: () => void;
+    listCommandHistory: () => CommandOutputType[];
   }
 }

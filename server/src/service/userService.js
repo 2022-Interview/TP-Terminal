@@ -73,7 +73,6 @@ async function userLogin(username, password, req) {
   if (!user) {
     throw new GetError(NOT_FOUND_ERROR_CODE, "用户不存在或密码错误");
   }
-  console.log("=----====", req.session);
   // 登录成功
   req.session.userInfo = user;
   return user;

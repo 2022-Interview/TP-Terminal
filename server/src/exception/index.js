@@ -1,4 +1,4 @@
-class GetError extends Error {
+class MyError extends Error {
   constructor(code, message) {
     super(message); // 调用Error内部的constructor
     this.code = code;
@@ -6,4 +6,4 @@ class GetError extends Error {
     this.name = "myError";
   }
 }
-module.exports = GetError;
+module.exports = MyError;

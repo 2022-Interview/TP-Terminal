@@ -6,6 +6,7 @@ import { commandMap } from "@/core/commandRegister";
 export const helpCommand: CommandType = {
   func: "help",
   name: "查看帮助",
+  desc: "help 查看系统集成的命令",
   alias: [],
   params: [
     {

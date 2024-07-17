@@ -1,4 +1,4 @@
-import { useTerminalConfigStore } from "@/core/commands/terminal/config/terminalConfigStore";
+import { useTerminalConfigStore } from "@/core/commands/terminal/welcome/store/terminalConfigStore";
 import { ref } from "vue";
 import _, { trim } from "lodash";
 import { commandMap } from "@/core/commandRegister";

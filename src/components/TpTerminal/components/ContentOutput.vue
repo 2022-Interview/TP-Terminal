@@ -1,9 +1,10 @@
 <template>
   <div class="content-output">
     <template v-if="output.type === 'text'">
-      <a-tag v-if="outputTagColor" :color="outputTagColor">{{
-        output.status
-      }}</a-tag>
+      <a-tag v-if="outputTagColor" :color="outputTagColor">
+        <template #icon> <CheckCircleOutlined /> </template>
+        {{ output.status }}
+      </a-tag>
       <span v-if="output.type === 'text'" v-html="linkText(output.text)"></span>
     </template>
     <component
@@ -15,6 +16,7 @@
 </template>
 
 <script setup lang="ts">
+// import { CheckCircleOutlined } from "@ant-design/icons-vue";
 import linkText from "@/utils/linkText";
 import { computed, toRefs } from "vue";
 import OutputType = TpTerminal.OutputType;
@@ -45,4 +47,15 @@ const outputTagColor = computed((): string => {
 });
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.ant-tag {
+  span {
+    font-weight: 800;
+    font-family: "Courier New", Courier, monospace;
+  }
+}
+
+.content-output {
+  margin-bottom: 20px;
+}
+</style>

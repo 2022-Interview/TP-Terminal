@@ -34,7 +34,7 @@ const loginCommand: CommandType = {
     const { setUserInfo } = useUserStore();
     if (res.code === 200) {
       setUserInfo(res.data);
-      terminal.writeTextResult("登录成功");
+      terminal.writeTextSuccessResult("登录成功");
     } else {
       terminal.writeTextErrorResult(res.message ?? "登录失败");
     }
