@@ -1,10 +1,11 @@
 .tp-terminal-wrapper {
   background: black;
   position: fixed;
-  top: 0px;
+  top: 45px;
   left: 0;
   bottom: 0;
   right: 0;
+  font-family: courier-new, courier, monospace;
   .tp-terminal {
     background: rgba(0, 0, 0, 0.6);
     padding: 20px;

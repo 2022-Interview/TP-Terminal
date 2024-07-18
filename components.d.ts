@@ -15,7 +15,6 @@ declare module 'vue' {
     AMenuItem: typeof import('ant-design-vue/es')['MenuItem']
     ARow: typeof import('ant-design-vue/es')['Row']
     ATag: typeof import('ant-design-vue/es')['Tag']
-    CheckCircleOutlined: typeof import('@ant-design/icons-vue')['CheckCircleOutlined']
     ContentOutput: typeof import('./src/components/TpTerminal/components/ContentOutput.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

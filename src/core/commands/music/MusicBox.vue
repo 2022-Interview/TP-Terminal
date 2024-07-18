@@ -1,9 +1,3 @@
-<!-- 
-  
-网易云 API：https://neteasecloudmusicapi.js.org/#/?id=%e8%8e%b7%e5%8f%96%e7%94%a8%e6%88%b7%e8%af%a6%e6%83%85
-Aplayer：https://aplayer.js.org/#/zh-Hans/?id=mse-%E6%94%AF%E6%8C%81
--->
-
 <template>
   <div>
     <div ref="aplayer"></div>
@@ -36,7 +30,6 @@ onMounted(async () => {
   }
 
   const { author, cover, id, mName, lrc } = res.data;
-  console.log();
 
   audio.value.push({
     name: mName,
@@ -59,4 +52,3 @@ onMounted(async () => {
   color: #000;
 }
 </style>
-import { stringify } from "querystring";

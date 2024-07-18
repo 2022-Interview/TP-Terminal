@@ -271,13 +271,10 @@ onMounted(() => {
     });
   } else {
     terminal.writeTextOutput(
-      `Welcome to TP-Terminal, coolest browser index for geeks!` +
+      `欢迎来到 TP-Terminal，` +
         `<a href="//github.com/2022-Interview/TP-Terminal" target='_blank'> GitHub Open Source</a>`
     );
-    terminal.writeTextOutput(
-      `Author <a href="" target="_blank">TP-Soleil</a>` +
-        `: please input 'help' to enjoy`
-    );
+    terminal.writeTextOutput(`✨输入 'help' 查看所有命令`);
   }
 });
 

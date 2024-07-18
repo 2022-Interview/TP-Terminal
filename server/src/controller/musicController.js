@@ -15,6 +15,7 @@ const { getLyric } = require("../third/neteaseMusicApi");
  */
 async function getSingleMusicApi(event) {
   const { keywords } = event;
+
   if (!keywords) {
     throw new MyError(REQUEST_PARAMS_ERROR_CODE, "请输入关键词");
   }
