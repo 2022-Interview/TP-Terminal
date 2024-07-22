@@ -2,10 +2,7 @@ import axios from "axios";
 
 // 自定义 axios 实例
 const myAxios = axios.create({
-  baseURL:
-    process.env.NODE_ENV === "production"
-      ? "http://43.136.123.111:7354/api"
-      : "http://localhost:7354/api"
+  baseURL: "/api"
 });
 
 myAxios.defaults.withCredentials = true;
