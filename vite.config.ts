@@ -76,12 +76,6 @@ export default defineConfig({
         target: "http://8.217.69.156/api/",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, "")
-      },
-      "https://2022-interview.github.io/api/": {
-        target: "http://8.217.69.156/api/",
-        changeOrigin: true,
-        rewrite: (path) =>
-          path.replace(/^https:\/\/2022-interview.github.io\/api\//, "")
       }
     }
   }
