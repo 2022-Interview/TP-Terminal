@@ -2,7 +2,8 @@ import axios from "axios";
 
 // 自定义 axios 实例
 const myAxios = axios.create({
-  baseURL: "/api"
+  // baseURL: "/api"
+  baseURL: "https://2022-interview.github.io/api/"
 });
 
 myAxios.defaults.withCredentials = true;
