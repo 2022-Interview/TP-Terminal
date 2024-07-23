@@ -2,7 +2,7 @@ import axios from "axios";
 
 // 自定义 axios 实例
 const myAxios = axios.create({
-  baseURL: "http://goaction.top/api"
+  baseURL: "/api"
 });
 
 myAxios.defaults.withCredentials = true;
