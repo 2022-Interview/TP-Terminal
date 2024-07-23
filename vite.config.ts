@@ -73,7 +73,7 @@ export default defineConfig({
   // server: {
   //   proxy: {
   //     "/api": {
-  //       target: "http://8.217.69.156/api/",
+  //       target: "http://goaction.top/api",
   //       changeOrigin: true,
   //       rewrite: (path) => path.replace(/^\/api/, "")
   //     }
