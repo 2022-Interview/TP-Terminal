@@ -73,7 +73,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://github.goaction.top/api",
+        target: "http://goaction.top/api",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, "")
       }
